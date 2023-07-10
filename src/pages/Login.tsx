@@ -12,9 +12,6 @@ import RightSide from "./Login/RightSide";
 
 const Login = () => {
   const size = useResizeHandler();
-
-  //useUserSessionRedirect();
-
   const faqs = usePublicData("/api/faqs/public");
   const news = usePublicData("/api/news/public");
   const announcements = usePublicData("/api/announcements/public");

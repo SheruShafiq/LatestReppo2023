@@ -2,6 +2,7 @@ import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 
 export type SessionType = {
+  mutationFlowWarning: boolean;
   initialised: boolean;
   active: boolean;
   permissions: string[];
@@ -18,6 +19,7 @@ export type SessionType = {
 export const sessionSlice = createSlice({
   name: "session",
   initialState: {
+    mutationFlowWarning: false,
     initialised: false,
     active: false,
     permissions: [],
@@ -34,6 +36,7 @@ export const sessionSlice = createSlice({
       if (action.payload.csrf) {
         state.csrf = action.payload.csrf;
       }
+      
       if (action.payload.permissions) {
         state.active = true;
         state.permissions = action.payload.permissions;
@@ -44,17 +47,17 @@ export const sessionSlice = createSlice({
       if (action.payload.user) {
         state.user = action.payload.user;
       }
-      console.log("Redux CSRF:", state.csrf);
       state.initialised = true;
     },
-    
+setMutationFlowWarning: (state, action) => {
+      state.mutationFlowWarning = action.payload;
+    },
     setPermissions: (state, action) => {
-        state.permissions = action.payload;
-      },
-      setSessionExpiresAt: (state, action) => {
-        state.expiresAt = action.payload;
-      },
-  
+      state.permissions = action.payload;
+    },
+    setSessionExpiresAt: (state, action) => {
+      state.expiresAt = action.payload;
+    },
 
     logout: (state) => {
       state.initialised = true;
@@ -68,19 +71,18 @@ export const sessionSlice = createSlice({
         lastName: "",
       };
       // broadcast logout event
-      const channel = new BroadcastChannel('logoutChannel');
-      channel.postMessage('userLoggedOut');
+      const channel = new BroadcastChannel("logoutChannel");
+      channel.postMessage("userLoggedOut");
     },
-    setSessionExpiresAt: (state, action) => {
-      state.expiresAt = action.payload;
-    }
   },
 });
 
 // export actions
-export const { login, logout, setPermissions, setSessionExpiresAt } = sessionSlice.actions;
+export const { login, logout, setPermissions, setSessionExpiresAt } =
+  sessionSlice.actions;
 
 // export selectors
+export const selectMutationFlowWarning = (state: RootState) => state.session.mutationFlowWarning;
 export const selectSession = (state: RootState) => state.session;
 export const selectSessionInitialised = (state: RootState) =>
   state.session.initialised;

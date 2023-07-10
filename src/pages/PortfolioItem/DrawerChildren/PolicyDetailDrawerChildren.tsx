@@ -34,7 +34,7 @@ function PolicyDetailDrawerChildren(data: any, name: any, setOpen: any) {
       </Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box flex={1}>
-          <InfoDisplay label={"Dekking"} value={`€${data?.coverage}`} />
+          <InfoDisplay label={"coverage"} value={`€${data?.coverage}`} />
         </Box>
         <Box flex={1}>
           <InfoDisplay

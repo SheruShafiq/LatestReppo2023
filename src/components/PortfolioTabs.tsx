@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Fade,
   IconButton,
   Skeleton,
   Tab,
@@ -82,7 +83,7 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
     "Einddatum",
     "Status",
     "Premie",
-    "Dekking",
+    "coverage",
   ];
   const [open, setOpen] = useState(false);
   const columns: Column[] = [
@@ -112,7 +113,7 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
       align: "left",
     },
     {
-      header: "Dekking",
+      header: "coverage",
       accessor: "coverage",
       align: "left",
       cell: (row: any) => <>{`€${row.coverage}`}</>,

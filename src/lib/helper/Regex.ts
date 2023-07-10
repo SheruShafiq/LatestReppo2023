@@ -15,3 +15,7 @@ export const validName = new RegExp("^[a-zA-Z ]{2,30}$");
 export const validBirthDate = new RegExp(
   "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$"
 );
+export const validateIBAN = new RegExp(
+  '^[A-Z]{2}[0-9]{2}[A-z0-9]{4}[0-9]{10}$'
+);
+

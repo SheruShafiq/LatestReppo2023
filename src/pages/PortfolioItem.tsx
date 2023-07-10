@@ -28,8 +28,9 @@ import {
 } from "../lib/redux/slices/layoutSlice";
 import DrawerComponent from "../components/DrawerComponent";
 import MutationDrawerParent from "../components/MutationDrawerParent";
-import apiService from "../lib/api/apiService";
 import { userData } from "../lib/types/Data";
+import AerService from "../lib/api/AerService";
+import AerClient from "../lib/api/AerClient";
 
 const PortfolioItem = () => {
   const permission = useAppSelector(selectSessionPermissions);
@@ -39,36 +40,21 @@ const PortfolioItem = () => {
   }
 
   const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
   const csrfToken = useAppSelector(selectSessionCsrf);
   const drawerState = useAppSelector(selectPolicyDetailDrawerState);
   const [data, setData] = React.useState<userData>(null);
   const [address, setAddress] = React.useState<string | null>(null);
   const size = useResizeHandler();
-  const dispatch = useAppDispatch();
 
   // fetch data from API endpoint /api/relations/{id}
-
-  const fetchData = async () => {
-    const res = await fetch(`/api/relations/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": csrfToken,
-      },
-    });
-
-    // const res = await apiService<{ expiryDate: string }>({
-    //   url: `/api/relations/${id}`,
-    //   method: "GET",
-    // })
-
-    const responseData: userData = await res.json();
-    setData(responseData);
-
-    dispatch(setSessionExpiresAt(res.headers.get("x-session-expires")));
-  };
-
   useEffect(() => {
+    const service = new AerService(AerClient);
+    const fetchData = async () => {
+      const response = await service.getRelationsId(id);
+      setData(response);
+    };
+
     fetchData();
   }, []);
 

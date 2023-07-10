@@ -1,10 +1,10 @@
 import React from "react";
 import { Fade, Button, Box, Typography } from "@mui/material";
-import MutationDrawerStep0 from "./MutationDrawerStep0";
-import MuationDekkingStep2 from "./MuationDekkingStep2";
+import MuationDekkingStep1 from "./MuationCoverageStep1";
+import MuationDekkingStep3 from "./MuationCoverageStep3";
 import { CurrentScreenProps } from "../../../components/MutationDrawerParent";
 
-const MuationDekkingStep1: React.FC<CurrentScreenProps> = ({
+const MuationDekkingStep2: React.FC<CurrentScreenProps> = ({
   handleNext,
   handleBack,
 }) => {
@@ -15,7 +15,7 @@ const MuationDekkingStep1: React.FC<CurrentScreenProps> = ({
       flexDirection={"column"}
       justifyContent={"flex-end"}
     >
-      <Typography>Dekking 1</Typography>
+      <Typography>coverage 2</Typography>
       <Box flexGrow={1} />
       <Fade in timeout={600}>
         <Box
@@ -30,7 +30,7 @@ const MuationDekkingStep1: React.FC<CurrentScreenProps> = ({
         >
           <Button
             color="inherit"
-            onClick={() => handleBack(MutationDrawerStep0)}
+            onClick={() => handleBack(MuationDekkingStep1)}
             sx={{
               width: { xs: "22rem", sm: "8.5rem" },
               mr: { xs: 0, sm: "2rem" },
@@ -42,8 +42,8 @@ const MuationDekkingStep1: React.FC<CurrentScreenProps> = ({
 
           <Button
             variant="contained"
-            sx={{ width: { xs: "22rem", sm: "8.5rem" } }}
-            onClick={() => handleNext(MuationDekkingStep2)}
+            sx={{ width: { xs: "22rem", sm: "14rem" } }}
+            onClick={() => handleNext(MuationDekkingStep3)}
           >
             VOLGENDE
           </Button>
@@ -53,4 +53,4 @@ const MuationDekkingStep1: React.FC<CurrentScreenProps> = ({
   );
 };
 
-export default MuationDekkingStep1;
+export default MuationDekkingStep2;

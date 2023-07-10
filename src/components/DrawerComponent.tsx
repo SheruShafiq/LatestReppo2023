@@ -6,6 +6,9 @@ import React, { SetStateAction, useEffect } from "react";
 import InfoDisplay from "./InfoDisplay";
 import useResizeHandler from "../lib/hooks/useResizeHandler";
 import { Dispatch } from "@reduxjs/toolkit";
+import PolicyIcon from "../assets/Policy.svg";
+import { selectPolicyDetailDrawerState } from "../lib/redux/slices/layoutSlice";
+import { useAppSelector } from "../lib/hooks/useAppSelector";
 
 export type DrawerProps = {
   open: boolean;
@@ -28,10 +31,16 @@ const DrawerComponent = ({
   setExtraWidth,
 }: DrawerProps) => {
   const size = useResizeHandler();
+  const drawerState = useAppSelector(selectPolicyDetailDrawerState);
   return (
     <Drawer
       anchor="right"
       open={open}
+      onClose={() => {
+        setOpen(!drawerState);
+        setCurrentChildren("default");
+        setExtraWidth(0);
+      }}
       ModalProps={{
         keepMounted: true, // Better open performance on mobile.
       }}
@@ -39,9 +48,10 @@ const DrawerComponent = ({
         sx: {
           width: {
             xs: size.width,
-            sm: `${26.625 + (width ? width : 0)}rem`,
-            md: `${26.625 + (width ? width : 0)}rem`,
+            sm: `calc(26.625rem + ${width ? width : 0}rem)`,
+            md: `calc(26.625rem + ${width ? width : 0}rem)`,
           },
+
           zIndex: 1301 + (zIndex ? zIndex : 0),
         },
       }}

@@ -14,6 +14,7 @@ import {
   CurrentScreenProps,
   PersonDetails,
 } from "../../../components/MutationDrawerParent";
+import MutationAddressStep3 from "./MutationAdressStep3";
 
 const InputSection: React.FC<CurrentScreenProps> = ({
   handleNext,
@@ -22,58 +23,93 @@ const InputSection: React.FC<CurrentScreenProps> = ({
   setSteps,
   setCurrentStepperLocation,
   oldData,
+  setNewData,
+  newData,
+  setExpectedSteps,
 }) => {
   const [selectedPersons, setSelectedPersons] = useState<string[]>([]);
 
-  const personDetails: PersonDetails[] = [
-    {
-      name: `${oldData.data.relations[0].first_name} ${oldData.data.relations[0].last_name}`,
-      id: oldData.data.relations[0].external_number,
-      address: `${oldData.data?.street} ${oldData.data?.housenumber}${oldData.data?.housenumber_addition},  ${oldData.data?.city}`,
-    },
-    {
-      name: `${oldData.data.relations[1].first_name} ${oldData.data.relations[1].last_name}`,
-      id: oldData.data.relations[1].external_number,
-      address: `${oldData.data?.street} ${oldData.data?.housenumber}${oldData.data?.housenumber_addition},  ${oldData.data?.city}`,
-    },
-  ];
-
+  const personDetails: PersonDetails[] = oldData.data.relations.map(
+    (relation: any) => ({
+      name: `${relation.first_name} ${relation.last_name}`,
+      id: relation.external_number,
+    })
+  );
   const handlePersonSelect = (personId: string) => {
     if (selectedPersons.includes(personId)) {
-      setSelectedPersons(selectedPersons.filter((id) => id !== personId));
+      setSelectedPersons((prevSelectedPersons) =>
+        prevSelectedPersons.filter((id) => id !== personId)
+      );
     } else {
-      setSelectedPersons([...selectedPersons, personId]);
+      setSelectedPersons((prevSelectedPersons) => [
+        ...prevSelectedPersons,
+        personId,
+      ]);
     }
   };
+
+  useEffect(() => {
+    if (setNewData) {
+      const newData = selectedPersons.map((personId) => ({
+        relation_id: personId,
+        postal_code: oldData.data?.postal_code,
+        housenumber: oldData.data?.housenumber,
+      }));
+      setNewData(newData);
+    }
+  }, [selectedPersons, setNewData, oldData]);
 
   const isButtonDisabled = selectedPersons.length === 0;
 
   useEffect(() => {
-    if (setCurrentStepperLocation && setStepperActive && setSteps) {
-      // Set the stepper active
-      setStepperActive(true);
-
-      // Set the steps array with your desired strings
-      const steps: string[] = ["Step 0", "Input Section", "Step 2"];
-      setSteps(steps);
-
-      // Set the current stepper location
-      setCurrentStepperLocation(0);
+    if (setNewData) {
+      const newData = oldData.data.relations
+        .filter((relation: any) =>
+          selectedPersons.includes(relation.external_number)
+        )
+        .map((relation: any) => ({
+          relation_id: relation.external_number,
+          postal_code: oldData.data?.postal_code,
+          housenumber: oldData.data?.housenumber,
+        }));
+      setNewData(newData);
     }
-  }, [setStepperActive, setSteps, setCurrentStepperLocation]);
+  }, [selectedPersons, setNewData, oldData]);
 
   if (!setStepperActive || !setSteps || !setCurrentStepperLocation) {
     return <div>Something went wrong</div>;
   }
+  useEffect(() => {
+    if (
+      setCurrentStepperLocation &&
+      setStepperActive &&
+      setSteps &&
+      setExpectedSteps
+    ) {
+      // Set the stepper active
+      setStepperActive(true);
 
+      // Set the steps array with your desired strings
+      const steps: string[] = ["Selecteer personen", "Wijziging", "Bevestigen"];
+      setSteps(steps);
+
+      // Set the current stepper location
+      setCurrentStepperLocation(0);
+      setExpectedSteps([
+        InputSection,
+        MutationAdressStep2,
+        MutationAddressStep3,
+      ]);
+    }
+  }, [setStepperActive, setSteps, setCurrentStepperLocation]);
   return (
     <>
       <Box>
-        <Typography sx={{ color: "black", pt: "12px" }}>
+        <Typography sx={{ color: "black", pt: "12px", pb: "2rem" }}>
           Selecteer de personen voor wie het adres aangepast moet worden
         </Typography>
         <FormGroup>
-          {personDetails.map((person) => (
+          {personDetails.map((person: any) => (
             <FormControlLabel
               key={person.id}
               value={person.name}
@@ -102,12 +138,22 @@ const InputSection: React.FC<CurrentScreenProps> = ({
                     fontWeight={400}
                     sx={{ pt: "10px" }}
                   >
-                    {person.address}
+                    {`${oldData.data?.street} ${oldData.data?.housenumber}${oldData.data?.housenumber_addition},  ${oldData.data?.city}`}
                   </Typography>
                 </>
               }
               labelPlacement="end"
-              sx={{ pt: "4rem", pl: "1rem" }}
+              sx={{
+                width: "100%",
+                pt: "1rem",
+                pb: "1rem",
+                mb: "1rem",
+                ml: "0rem",
+                borderRadius: "10px",
+                backgroundColor: selectedPersons.includes(person.id)
+                  ? "#F1F5F9"
+                  : "none",
+              }}
             />
           ))}
         </FormGroup>
