@@ -1,17 +1,15 @@
 // src/components/RightSide.tsx
 import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
-import Announcements, {
-  AnnouncementProps,
-} from "../../components/Announcements";
-import CopyrightText from "../../components/CopyrightText";
+import Announcements, { AnnouncementProps } from "@/components/Announcements";
+import CopyrightText from "@/components/CopyrightText";
 import {
   CollapsibleListItem as CollapsibleListItem,
   CollapsibleListItemProps,
-} from "../../components/CollapsibleListItem";
-import LoginButton from "../../components/LoginButton";
-import News from "../../components/News";
-import { NewsType } from "../../lib/types/NewsType";
+} from "@/components/CollapsibleListItem";
+import LoginButton from "@/components/LoginButton";
+import News from "@/components/News";
+import { NewsType } from "@/lib/types/NewsType";
 
 interface RightSideProps {
   logo: string;

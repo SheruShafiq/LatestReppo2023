@@ -1,4 +1,4 @@
-export const validPostalCode = new RegExp("^[1-9][0-9]{3}s?[a-zA-Z]{2}$");
+export const validPostalCode = new RegExp("/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/");
 
 export const validPhoneNumber = new RegExp("^[0-9]{10}$");
 
@@ -16,6 +16,6 @@ export const validBirthDate = new RegExp(
   "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$"
 );
 export const validateIBAN = new RegExp(
-  '^[A-Z]{2}[0-9]{2}[A-z0-9]{4}[0-9]{10}$'
+  '^NL[0-9]{2}[A-z0-9]{4}[0-9]{10}$'
 );
 

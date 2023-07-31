@@ -3,15 +3,15 @@ import { ThemeProvider } from "@mui/system";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import App from "./App";
-import "./index.css";
-import "./lib/i18n/i18n";
-import { store } from "./lib/redux/store";
+import App from "@/App";
+import "@/index.css";
+import "@/lib/i18n/i18n";
+import { store } from "@/lib/redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import WebFont from "webfontloader";
-import inter from "./assets/fonts/inter.css";
+import inter from "@/assets/fonts/inter.css";
 
 // WebFont.load({
 //   custom: {

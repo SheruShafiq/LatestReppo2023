@@ -1,8 +1,8 @@
 // src/components/LeftSide.tsx
 import { Box } from "@mui/material";
 import React from "react";
-import News from "../../components/News";
-import { NewsType } from "../../lib/types/NewsType";
+import News from "@/components/News";
+import { NewsType } from "@/lib/types/NewsType";
 
 interface LeftSideProps {
   backgroundImage: string;

@@ -92,6 +92,16 @@ class AerService {
         }
     }
 
+    async getAddressLookup(postal_code: string, housenumber: string){
+        try {
+            const response = await this.httpClient.get(`/api/address/lookup?postal_code=${postal_code}&housenumber=${housenumber}`)
+            return response
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    }
+
     async postMutationAddress(data: IPostMutationAddress ){
         try {
             const response = await this.httpClient.post('/api/mutations/address', data)

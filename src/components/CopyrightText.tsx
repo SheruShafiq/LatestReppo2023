@@ -1,6 +1,6 @@
+import { ENV } from "@/lib/types/ENV";
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { ENV } from "../lib/types/Env";
 
 const CopyrightText = () => {
   return (

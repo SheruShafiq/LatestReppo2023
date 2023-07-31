@@ -3,11 +3,12 @@ import sessionSlice from "./slices/sessionSlice";
 import layoutSlice from "./slices/layoutSlice";
 import mutationSlice from "./slices/mutationSlice";
 
+
 export const store = configureStore({
   reducer: {
     session: sessionSlice,
     layout: layoutSlice,
-    
+    mutation: mutationSlice,
   },
 });
 

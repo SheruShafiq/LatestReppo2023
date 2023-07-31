@@ -2,7 +2,6 @@ import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 
 export type SessionType = {
-  mutationFlowWarning: boolean;
   initialised: boolean;
   active: boolean;
   permissions: string[];
@@ -19,7 +18,6 @@ export type SessionType = {
 export const sessionSlice = createSlice({
   name: "session",
   initialState: {
-    mutationFlowWarning: false,
     initialised: false,
     active: false,
     permissions: [],
@@ -36,7 +34,6 @@ export const sessionSlice = createSlice({
       if (action.payload.csrf) {
         state.csrf = action.payload.csrf;
       }
-      
       if (action.payload.permissions) {
         state.active = true;
         state.permissions = action.payload.permissions;
@@ -49,9 +46,7 @@ export const sessionSlice = createSlice({
       }
       state.initialised = true;
     },
-setMutationFlowWarning: (state, action) => {
-      state.mutationFlowWarning = action.payload;
-    },
+
     setPermissions: (state, action) => {
       state.permissions = action.payload;
     },
@@ -82,7 +77,6 @@ export const { login, logout, setPermissions, setSessionExpiresAt } =
   sessionSlice.actions;
 
 // export selectors
-export const selectMutationFlowWarning = (state: RootState) => state.session.mutationFlowWarning;
 export const selectSession = (state: RootState) => state.session;
 export const selectSessionInitialised = (state: RootState) =>
   state.session.initialised;

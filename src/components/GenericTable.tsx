@@ -5,9 +5,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import ChevronRight from "@mui/icons-material/ChevronRight";
-import DrawerComponent from "./DrawerComponent";
-import PolicyDetailDrawerChildren from "../pages/PortfolioItem/DrawerChildren/PolicyDetailDrawerChildren";
 
 export type Column = {
   header: string;
@@ -33,10 +30,7 @@ const GenericTable = ({ tableContent, columns }: GenericTableProps) => {
                 key={index}
                 padding="none"
                 sx={{ fontWeight: "600" }}
-                align={
-                  column.align ||
-                  (index === columns.length - 1 ? "right" : "left")
-                }
+                align={column.align}
                 data-testid={column.header.toLowerCase()}
               >
                 {column.header}
@@ -56,10 +50,7 @@ const GenericTable = ({ tableContent, columns }: GenericTableProps) => {
                   padding="none"
                   component="th"
                   scope="row"
-                  align={
-                    column.align ||
-                    (index === columns.length - 1 ? "right" : "left")
-                  }
+                  align={column.align}
                   sx={{ py: "0.5rem" }}
                   data-testid={`${column.header.toLowerCase()}-row`}
                 >

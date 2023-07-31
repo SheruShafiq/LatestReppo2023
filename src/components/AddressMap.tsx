@@ -4,12 +4,12 @@ import "leaflet/dist/leaflet.css";
 import { LatLngExpression } from "leaflet";
 import GenericFallback from "./GenericFallback";
 import { Box, Skeleton } from "@mui/material";
-import { useAppSelector } from "../lib/hooks/useAppSelector";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import {
   selectSessionCsrf,
   setSessionExpiresAt,
-} from "../lib/redux/slices/sessionSlice";
-import { useAppDispatch } from "../lib/hooks/useAppDispatch";
+} from "@/lib/redux/slices/sessionSlice";
+import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
 
 export type AddressMapProps = {
   postalCode: string;

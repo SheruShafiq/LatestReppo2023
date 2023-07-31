@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GenericFallback > should render the component with the given title and no description 1`] = `Screen {}`;
