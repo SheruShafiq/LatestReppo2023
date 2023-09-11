@@ -1,5 +1,7 @@
+import { Box, Button, Fade, Stack } from "@mui/material";
+
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Fade } from "@mui/material";
 import React from "react";
 
 export type NavigationButtonsProps = {
@@ -11,6 +13,7 @@ export type NavigationButtonsProps = {
   setLoading?: (prev: boolean) => void;
   loading?: boolean;
   isLast?: boolean;
+  fileDownLoad?: boolean;
 };
 
 const NavigationButtons = ({
@@ -22,33 +25,43 @@ const NavigationButtons = ({
   setLoading,
   loading,
   isLast,
+  fileDownLoad,
 }: NavigationButtonsProps) => (
   <Fade in timeout={600}>
     <Box
       sx={{
         display: "flex",
         flexDirection: { xs: "column", sm: "row" },
-        pt: 2,
+        mt: 2,
         justifyContent: { xs: "center", sm: "flex-end" },
         alignItems: { xs: "center", sm: "flex-end" },
         pb: 2,
       }}
     >
-      <Button
-        color="inherit"
-        sx={{
-          width: { xs: "22rem", sm: "8.5rem" },
-          mr: { xs: 0, sm: "2rem" },
-          pb: { xs: "2rem", sm: "0.3rem" },
-        }}
-        onClick={handleBack}
-      >
-        {backText}
-      </Button>
+      <Stack direction={"row"} alignContent={"center"} alignItems={"center"}>
+        <Button
+          color="inherit"
+          sx={{
+            width: { xs: "22rem", sm: "8.5rem" },
+            mr: { xs: 0, sm: "2rem" },
+            pb: { xs: "2rem", sm: fileDownLoad ? "0rem" : "0.3rem" },
+          }}
+          onClick={handleBack}
+        >
+          {fileDownLoad ? (
+            <Box mt={"0.5rem"} mr={"0.5rem"}>
+              <FileDownloadIcon />
+            </Box>
+          ) : (
+            <Box />
+          )}
+          {backText}
+        </Button>
+      </Stack>
       {!isLast && (
         <Button
           variant="contained"
-          sx={{ width: { xs: "22rem", sm: "8.5rem" } }}
+          sx={{ width: { xs: "100%", sm: "8.5rem" } }}
           onClick={handleNext}
           disabled={disabled}
         >
@@ -58,7 +71,7 @@ const NavigationButtons = ({
       {isLast && (
         <LoadingButton
           variant="contained"
-          sx={{ width: { xs: "22rem", sm: "14rem" } }}
+          sx={{ width: { xs: "100%", sm: "14rem" } }}
           onClick={() => {
             if (setLoading) setLoading(true);
             setTimeout(() => {

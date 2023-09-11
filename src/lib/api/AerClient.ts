@@ -9,7 +9,7 @@ const AerClient = {
                 'Content-Type': 'application/json',
             }
         })
-        store.dispatch({type: 'session/setSessionExpiresAt', payload: data.headers.get('X-Session-Expires') || ''})
+       
         return data.json()
     },
 
@@ -18,11 +18,11 @@ const AerClient = {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
-                'X-CSRFToken': store.getState().session.csrf,
+                'X-CSRF-Token': store.getState().session.csrf,
                 'Content-Type': 'application/json'
             }
         })
-        store.dispatch({type: 'session/setSessionExpiresAt', payload: data.headers.get('X-Session-Expires') || ''})
+       
         return data.json()
     }
 }

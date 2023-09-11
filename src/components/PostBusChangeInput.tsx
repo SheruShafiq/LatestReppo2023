@@ -1,5 +1,5 @@
+import { Box, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { Stack, TextField, Box } from "@mui/material";
 
 export type PostBusComponentProps = {
   psCode: string;
@@ -35,7 +35,7 @@ const PostBusComponent: React.FC<PostBusComponentProps> = ({
   return (
     <Stack id="PostBusAddress" sx={{ mt: "2rem" }} data-testid="PostBusAddress">
       <TextField
-        error={hsValid}
+        error={!hsValid}
         data-testid="Postbusnummer"
         type="text"
         size="small"

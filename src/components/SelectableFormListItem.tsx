@@ -50,6 +50,7 @@ const SelectableFormListItem = ({
       }
       labelPlacement="end"
       sx={{
+        width: "100%",
         py: "1rem",
         mb: "1rem",
         ml: "0rem",

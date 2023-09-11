@@ -20,18 +20,16 @@ const CheckAndSubmit: React.FC<CheckAndSubmitProps> = ({
   handleNext,
   newData,
 }) => {
-  console.log(newData);
-
   const sideLabels = ["Betaalfrequentie", "Betaalwijze", "IBAN"];
 
   return (
     <>
       <Box>
-        <Typography sx={{ pt: "12px", ml: "0px", pl: "8px" }}>
+        <Typography sx={{ pt: "12px", ml: "0px" }}>
           Controleer de gegevens
         </Typography>
       </Box>
-      <Box px={"0.5rem"} my={"1rem"}>
+      <Box my={"1rem"}>
         {newData.map((data: any, index: number) => {
           const oldData: DataObject = {
             Betaalfrequentie: data.policy_details.premium_frequency,
@@ -39,7 +37,7 @@ const CheckAndSubmit: React.FC<CheckAndSubmitProps> = ({
             IBAN: data.policy_details.iban,
           };
 
-          const mockNewData: any = {
+          const newDataMod: DataObject = {
             Betaalfrequentie: data.policy_details.MutationPreiumFrequence,
             Betaalwijze: data.policy_details.MutationPaymentMethod,
             IBAN: data.policy_details.MutationIban,
@@ -58,7 +56,7 @@ const CheckAndSubmit: React.FC<CheckAndSubmitProps> = ({
               <Box my={"1rem"}>
                 <ShowChangesTable
                   oldData={oldData}
-                  newData={mockNewData}
+                  newData={newDataMod}
                   sideLabels={sideLabels}
                 />
               </Box>

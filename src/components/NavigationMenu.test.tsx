@@ -1,14 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import { debug } from "vitest-preview";
-import { Provider } from "react-redux";
-import { store } from "../lib/redux/store";
-import NavigationMenu from "../components/NavigationMenu";
+
 import { BrowserRouter } from "react-router-dom";
+import NavigationMenu from "../components/NavigationMenu";
+import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import sessionSlice from "../lib/redux/slices/sessionSlice";
-import layoutSlice from "../lib/redux/slices/layoutSlice";
+import { debug } from "vitest-preview";
 import { fireEvent } from "@testing-library/react";
+import layoutSlice from "../lib/redux/slices/layoutSlice";
 import matchers from "@testing-library/jest-dom";
+import sessionSlice from "../lib/redux/slices/sessionSlice";
+import { store } from "../lib/redux/store";
+
 expect.extend(matchers);
 
 const mockStore = configureStore({
@@ -36,6 +38,7 @@ const mockStore = configureStore({
     layout: {
       drawerOpen: false,
       accountMenuOpen: false,
+      recentlyViewed: [],
     },
   },
 });
@@ -45,7 +48,7 @@ describe("NavMenuDrawer", () => {
     const { getByTestId } = await render(
       <Provider store={store}>
         <BrowserRouter>
-          <NavigationMenu></NavigationMenu>
+          <NavigationMenu routes={[]} drawerWidth={0}></NavigationMenu>
         </BrowserRouter>
       </Provider>
     );
@@ -56,10 +59,10 @@ describe("NavMenuDrawer", () => {
   });
 
   it("tests if only the permissions that are granted are being rendered", async () => {
-    const { getByTestId } = await render(
+    const { getByTestId } = render(
       <Provider store={mockStore}>
         <BrowserRouter>
-          <NavigationMenu></NavigationMenu>
+          <NavigationMenu routes={[]} drawerWidth={0}></NavigationMenu>
         </BrowserRouter>
       </Provider>
     );
@@ -78,7 +81,7 @@ describe("NavMenuDrawer", () => {
     const { getByTestId } = await render(
       <Provider store={mockStore}>
         <BrowserRouter>
-          <NavigationMenu></NavigationMenu>
+          <NavigationMenu routes={[]} drawerWidth={0}></NavigationMenu>
         </BrowserRouter>
       </Provider>
     );
@@ -100,7 +103,7 @@ describe("NavMenuDrawer", () => {
     const { getByTestId, findByTestId } = render(
       <Provider store={mockStore}>
         <BrowserRouter>
-          <NavigationMenu></NavigationMenu>
+          <NavigationMenu routes={[]} drawerWidth={0}></NavigationMenu>
         </BrowserRouter>
       </Provider>
     );

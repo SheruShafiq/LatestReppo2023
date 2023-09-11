@@ -1,30 +1,5 @@
-import {
-  Typography,
-  Divider,
-  Box,
-  Button,
-  IconButton,
-  Skeleton,
-} from "@mui/material";
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useAppSelector } from "@/lib/hooks/useAppSelector";
-import {
-  selectSessionCsrf,
-  selectSessionExpiresAt,
-  selectSessionPermissions,
-  setSessionExpiresAt,
-} from "@/lib/redux/slices/sessionSlice";
-import InfoDisplay from "@/components/InfoDisplay";
-import AddressMap from "@/components/AddressMap";
-import PortfolioTabs from "@/components/PortfolioTabs";
-import Edit from "@mui/icons-material/Edit";
-import useResizeHandler from "@/lib/hooks/useResizeHandler";
-import Unauthorized from "../../Unauthorized";
-import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
-import AerService from "@/lib/api/AerService";
-import AerClient from "@/lib/api/AerClient";
-import { userData } from "@/lib/types/Data";
+import { Box, Button, Divider, Skeleton, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import {
   selectDrawerState,
   selectInFlow,
@@ -32,21 +7,36 @@ import {
   setDrawerState,
   setWarningActive,
 } from "@/lib/redux/slices/mutationSlice";
+
+import AddressMap from "@/components/AddressMap";
+import AerClient from "@/lib/api/AerClient";
+import AerService from "@/lib/api/AerService";
 import DrawerComponent from "@/components/DrawerComponent";
+import Edit from "@mui/icons-material/Edit";
+import InfoDisplay from "@/components/InfoDisplay";
 import Mutations from "./Mutations/Mutations";
+import PortfolioTabs from "@/pages/Portfolio/Customer/PortfolioTabs";
+import Unauthorized from "../../Unauthorized";
+import { selectSessionPermissions } from "@/lib/redux/slices/sessionSlice";
+import { setRecentlyViewed } from "@/lib/redux/slices/layoutSlice";
+import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
+import { useParams } from "react-router-dom";
+import useResizeHandler from "@/lib/hooks/useResizeHandler";
+import { userData } from "@/lib/types/Data";
 
 const Customer = () => {
   const isWarningActive = useAppSelector(selectWarningActive);
   const permission = useAppSelector(selectSessionPermissions);
+
   const inFLow = useAppSelector(selectInFlow);
-  if (!permission.includes("portfolio-management")) {
+  if (!permission.includes("portfolio")) {
     return <Unauthorized />;
   }
-
-  const { id } = useParams<{ id: string }>();
   const [data, setData] = React.useState<userData>(null);
   const [address, setAddress] = React.useState<string | null>(null);
   const size = useResizeHandler();
+  const dispatch = useAppDispatch();
   // fetch data from API endpoint /api/relations/{id}
   useEffect(() => {
     const service = new AerService(AerClient);
@@ -57,6 +47,22 @@ const Customer = () => {
 
     fetchData();
   }, []);
+  const { id } = useParams<{ id: string }>();
+  const [currentPageData, setCurrentPageData] = useState();
+  useEffect(() => {
+    if (data)
+      setCurrentPageData({
+        heading: data?.name,
+        subHeading: [`Relatienummer: ${data?.relations?.[0].external_number}`],
+        url: `/portfolio/${id}`,
+      });
+  }, [data, id]);
+
+  useEffect(() => {
+    if (currentPageData) {
+      dispatch(setRecentlyViewed(currentPageData));
+    }
+  }, [currentPageData]);
 
   useEffect(() => {
     if (data) {
@@ -65,11 +71,12 @@ const Customer = () => {
       );
     }
   }, [data]);
-  const dispatch = useAppDispatch();
+
   const drawerState = useAppSelector(selectDrawerState);
   function setWarningActiveFunc(state: boolean) {
     dispatch(setWarningActive(state));
   }
+
   return (
     <>
       <Box display="flex" alignItems="center">

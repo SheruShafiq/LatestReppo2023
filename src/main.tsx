@@ -1,17 +1,18 @@
-import { createTheme } from "@mui/material";
-import { ThemeProvider } from "@mui/system";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import App from "@/App";
 import "@/index.css";
 import "@/lib/i18n/i18n";
-import { store } from "@/lib/redux/store";
+
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import App from "@/App";
 import { BrowserRouter } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { Provider } from "react-redux";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ThemeProvider } from "@mui/system";
 import WebFont from "webfontloader";
+import { createTheme } from "@mui/material";
 import inter from "@/assets/fonts/inter.css";
+import { store } from "@/lib/redux/store";
 
 // WebFont.load({
 //   custom: {
@@ -50,15 +51,13 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </ThemeProvider>
-      </LocalizationProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ThemeProvider>
+    </LocalizationProvider>
+  </BrowserRouter>
 );

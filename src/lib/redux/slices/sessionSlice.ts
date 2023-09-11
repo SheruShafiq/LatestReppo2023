@@ -65,9 +65,7 @@ export const sessionSlice = createSlice({
         firstName: "",
         lastName: "",
       };
-      // broadcast logout event
-      const channel = new BroadcastChannel("logoutChannel");
-      channel.postMessage("userLoggedOut");
+     
     },
   },
 });

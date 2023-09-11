@@ -1,12 +1,12 @@
-import Close from "@mui/icons-material/Close";
-import Edit from "@mui/icons-material/Edit";
-
 import { Box, Button, Drawer, Fab, Typography, keyframes } from "@mui/material";
 import React, { SetStateAction, useEffect, useRef } from "react";
-import useResizeHandler from "../lib/hooks/useResizeHandler";
-import { useAppSelector } from "@/lib/hooks/useAppSelector";
+
+import Close from "@mui/icons-material/Close";
+import Edit from "@mui/icons-material/Edit";
 import { selectDrawerState } from "@/lib/redux/slices/layoutSlice";
 import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
+import useResizeHandler from "../lib/hooks/useResizeHandler";
 
 export type DrawerProps = {
   open: boolean;
@@ -87,16 +87,15 @@ const DrawerComponent = ({
       }}
     >
       <Box
-        // width={{ xs: size.width, sm: size.width, md: "26.625rem" }}
-        paddingLeft={"2rem"}
-        paddingRight={"2rem"}
+        paddingLeft={{ xs: "1rem", sm: "1rem", md: "2rem" }}
+        paddingRight={{ xs: "1rem", sm: "1rem", md: "2rem" }}
         height={"100%"}
         display={"flex"}
         flexDirection={"column"}
       >
         <Box
           display={"flex"}
-          paddingTop={"1.5rem"}
+          paddingTop={{ xs: "1rem", sm: "1rem", md: "2rem" }}
           width={"100%"}
           justifyContent={"space-between"}
           alignItems={"center"}

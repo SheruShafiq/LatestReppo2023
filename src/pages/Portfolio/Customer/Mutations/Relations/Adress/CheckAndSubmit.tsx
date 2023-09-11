@@ -21,20 +21,18 @@ function CheckAndSubmit({
 }: CheckAndSubmitProps) {
   const [sideLabels, setSideLabels] = React.useState<string[]>([]);
   const [adress, setAdress] = React.useState<string>("");
-
   useEffect(() => {
     if (newData[0].isPostBus) {
-      setSideLabels(["Postcode", "Postbus", "Plaatsnaam"]);
       setAdress(`${newData[0]?.housenumber}`);
     } else {
       setAdress(
         `${newData[0]?.street} ${newData[0]?.housenumber}${newData[0]?.addition}`
       );
-      setSideLabels(["Postcode", "Adres", "Woonplaats"]);
     }
+    setSideLabels(["Postcode", "Adres", "Woonplaats"]);
   }, []);
   const [loading, setLoading] = React.useState(false);
-  console.log(newData[0]);
+
   return (
     <Box
       sx={{ width: "100%" }}
@@ -42,7 +40,7 @@ function CheckAndSubmit({
       display={"flex"}
       flexDirection={"column"}
     >
-      <Typography sx={{ color: "black", pt: "0.75rem", pl: "0.5rem" }}>
+      <Typography sx={{ color: "black", pt: "0.75rem" }}>
         Controleer de gegevens
       </Typography>
 
@@ -76,7 +74,7 @@ function CheckAndSubmit({
               title={`${relation.first_name} ${relation.last_name}`}
               subtitle2={relation.birthdate}
             />
-            <Box id={"adressChanges"} ml={"-63px"}>
+            <Box id={"adressChanges"} sx={{ ml: { xs: "0rem", sm: "-63px" } }}>
               <ShowChangesTable
                 newData={{
                   Postcode: newData[0]?.postal_code,

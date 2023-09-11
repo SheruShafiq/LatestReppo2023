@@ -12,16 +12,11 @@ import InfoDisplay from "./InfoDisplay";
 import { use } from "chai";
 import GenericTable, { Column } from "./GenericTable";
 import PersonDetailDrawer from "./DrawerComponent";
-import PersonDetailDrawerChildren from "@/pages/Portfolio/Customer/RelationDetails";
+import PersonDetailDrawerChildren from "../pages/PortfolioItem/DrawerChildren/PersonDetailDrawerChildren";
 import DrawerComponent from "./DrawerComponent";
-import PolicyDetails from "../pages/Portfolio/Customer/PolicyDetails";
+import PolicyDetailDrawerChildren from "../pages/PortfolioItem/DrawerChildren/PolicyDetailDrawerChildren";
 import ChevronRight from "@mui/icons-material/ChevronRight";
-import {
-  selectDrawerState,
-  setDrawerState,
-} from "../lib/redux/slices/layoutSlice";
-import { useAppDispatch } from "../lib/hooks/useAppDispatch";
-import { useAppSelector } from "../lib/hooks/useAppSelector";
+import MutationDrawerParent from "./MutationDrawerParent";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +36,11 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
     </div>
   );
 }
@@ -77,7 +76,15 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
       setTotalCoverage(`€${total}`);
     }
   }, [data]);
-
+  const headers = [
+    "Polisnummer",
+    "Product",
+    "Einddatum",
+    "Status",
+    "Premie",
+    "Dekking",
+  ];
+  const [open, setOpen] = useState(false);
   const columns: Column[] = [
     {
       header: "Polisnummer",
@@ -130,8 +137,9 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
               open={open}
               setOpen={setOpen}
               title="Polisinformatie"
+              width={0}
             >
-              {PolicyDetails(row, name)}
+              {PolicyDetailDrawerChildren(row, name, setOpen)}
             </DrawerComponent>
           </>
         );
@@ -144,8 +152,7 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
   const [extraWidth, setExtraWidth] = useState(0);
   const [currentTitle, setCurrentTitle] = useState("Klantinformatie");
   const [currentChildren, setCurrentChildren] = useState("");
-  const dispatch = useAppDispatch();
-  const drawerState = useAppSelector(selectDrawerState);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -175,7 +182,6 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
                     backgroundColor: "#E4EAF2",
                     color: "#94A3B8",
                   }}
-                  onClick={() => dispatch(setDrawerState(!drawerState))}
                 />
                 <Typography
                   variant="h1"
@@ -234,9 +240,22 @@ const PortfolioTabs = ({ data }: PortfolioTabsProps) => {
       <DrawerComponent
         open={drawerOpen}
         setOpen={setDrawerOpen}
-        title="Klantinformatie"
+        title={currentTitle}
+        width={extraWidth}
+        setCurrentChildren={setCurrentChildren}
+        setExtraWidth={setExtraWidth}
       >
-        {PersonDetailDrawerChildren(data)}
+        {currentChildren === "mutation" ? (
+          <MutationDrawerParent data={data} />
+        ) : (
+          <PersonDetailDrawerChildren
+            data={data}
+            setOpen={setOpen}
+            setExtraWidth={setExtraWidth}
+            setCurrentTitle={setCurrentTitle}
+            setCurrentChildren={setCurrentChildren}
+          />
+        )}
       </DrawerComponent>
     </Box>
   );

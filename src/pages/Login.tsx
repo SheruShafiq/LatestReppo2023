@@ -1,18 +1,16 @@
 // src/pages/Login.tsx
 import { Box } from "@mui/material";
-import React from "react";
-import useResizeHandler from "../lib/hooks/useResizeHandler";
-
-import Logo from "../assets/AerLogo.svg";
 import Family from "../assets/family-min.jpg";
-import usePublicData from "../lib/hooks/usePublicData";
-import useUserSessionRedirect from "../lib/hooks/useUserSessionRedirect";
 import LeftSide from "./Login/LeftSide";
+import Logo from "../assets/AerLogo.svg";
+import React from "react";
 import RightSide from "./Login/RightSide";
+import usePublicData from "@/lib/hooks/useAPI";
+import useResizeHandler from "../lib/hooks/useResizeHandler";
 
 const Login = () => {
   const size = useResizeHandler();
-  const faqs = usePublicData("/api/faqs/public");
+  const faqs = usePublicData("/api/faqs/public/login");
   const news = usePublicData("/api/news/public");
   const announcements = usePublicData("/api/announcements/public");
   return (

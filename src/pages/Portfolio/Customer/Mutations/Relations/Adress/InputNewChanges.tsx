@@ -68,7 +68,6 @@ function InputNewChanges({
         sx={{
           color: "black",
           pt: "0.75rem",
-          pl: { xs: "0rem", sm: "0.5rem" },
         }}
       >
         Wat zijn de nieuwe adresgegevens
@@ -78,13 +77,13 @@ function InputNewChanges({
         color="#6C737F"
         fontSize="1rem"
         fontWeight={400}
-        sx={{ pt: "2rem", pl: { xs: "0rem", sm: "0.5rem" } }}
+        sx={{ pt: "2rem" }}
       >
         Postbusadres?
       </Typography>
       <RadioGroup
         row
-        sx={{ pl: { xs: "0.5rem", sm: "1.1875rem" } }}
+        sx={{ pl: { xs: "0.5rem", sm: "0.8rem" } }}
         value={isPostBusAddress ? "Ja" : "Nee"}
         onChange={handleRadioChange}
       >

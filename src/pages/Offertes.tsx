@@ -1,17 +1,15 @@
-import { Typography } from "@mui/material";
-import React from "react";
 import DefaultPageLayout from "../components/DefaultPageLayout";
-import { useAppSelector } from "../lib/hooks/useAppSelector";
-import { selectSessionPermissions } from "../lib/redux/slices/sessionSlice";
+import React from "react";
+import { Typography } from "@mui/material";
 import Unauthorized from "./Unauthorized";
+import { selectSessionPermissions } from "../lib/redux/slices/sessionSlice";
+import { useAppSelector } from "../lib/hooks/useAppSelector";
 
 const Offertes = () => {
-  const permission = useAppSelector(selectSessionPermissions)
+  const permission = useAppSelector(selectSessionPermissions);
 
-  if(!permission.includes("quotes-management")) {
-    return (
-      <Unauthorized />
-    )
+  if (!permission.includes("quotes")) {
+    return <Unauthorized />;
   }
 
   return (

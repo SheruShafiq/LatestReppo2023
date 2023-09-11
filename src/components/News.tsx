@@ -1,10 +1,11 @@
 import { Box, Divider, Fade, Link, Typography } from "@mui/material";
+
 import React from "react";
 
 export type NewsProps = {
   articles:
     | {
-        title: string;
+        title?: string;
         content: string;
         link?: string;
       }[]
@@ -12,11 +13,13 @@ export type NewsProps = {
   onMobile?: boolean;
 };
 
-export type ArticleType = {
-  title: string;
-  content: string;
-  link?: string;
-};
+export type ArticleType =
+  | {
+      title: string;
+      content: string;
+      link?: string;
+    }[]
+  | undefined;
 
 const News = ({ articles, onMobile }: NewsProps) => {
   if (articles === undefined) {
@@ -52,8 +55,9 @@ const News = ({ articles, onMobile }: NewsProps) => {
               paddingBottom={"0.5rem"}
               paddingTop={index === 0 ? "0.5rem" : "2rem"}
               fontSize={18}
+              fontWeight={600}
             >
-              <b>{article.title}</b>
+              {article?.title}
             </Typography>
             <Typography paddingBottom={"0.5rem"}>{article.content}</Typography>
             <Link

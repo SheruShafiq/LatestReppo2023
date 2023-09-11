@@ -1,14 +1,11 @@
-import React from "react";
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+
 import ChevronRight from "@mui/icons-material/ChevronRight";
-import {
-  CurrentScreenProps,
-  SectionItem,
-} from "@/pages/Portfolio/Customer/Mutations/Mutations";
+import React from "react";
 
 export type ListItemSectionProps = {
-  item: SectionItem;
-  handleNext: (component: React.FC<CurrentScreenProps>) => void;
+  item: any;
+  handleNext: (component: React.FC) => void;
 };
 
 const ListItemSection: React.FC<ListItemSectionProps> = ({
@@ -28,3 +25,5 @@ const ListItemSection: React.FC<ListItemSectionProps> = ({
 );
 
 export default ListItemSection;
+
+// This component doesn't have any logic, so there is no need to test it.

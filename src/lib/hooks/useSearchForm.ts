@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { format, parse } from "date-fns";
+
 import { SearchResultType } from "../types/SearchResultType";
+import { useState } from "react";
 import { validPostalCode } from "../helper/Regex";
-import { useAppDispatch } from "./useAppDispatch";
-import { setSessionExpiresAt } from "../redux/slices/sessionSlice";
 
 export const useSearchForm = () => {
   const [voornaam, setVoornaam] = useState<string>("");
@@ -81,7 +80,6 @@ export const useSearchForm = () => {
     });
 
     const result = await data.json();
-    // dispatch(setSessionExpiresAt(result.headers.get("x-session-expires")));
     setSearchResults(result);
     setLoading(false);
   };

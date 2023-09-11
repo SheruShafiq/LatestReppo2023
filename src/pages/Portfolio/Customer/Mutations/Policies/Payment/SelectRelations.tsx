@@ -48,7 +48,7 @@ const SelectRelations: React.FC<RelationProps> = ({
   return (
     <>
       <Box>
-        <Typography sx={{ color: "black", pt: "12px", pl: "8px" }}>
+        <Typography sx={{ color: "black", pt: "12px" }}>
           Selecteer de personen voor wie het adres aangepast moet worden
         </Typography>
         <FormGroup>

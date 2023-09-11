@@ -44,7 +44,6 @@ function Address(): JSX.Element {
   };
 
   const disabled = selectedPersons.length === 0;
-
   useEffect(() => {
     const newData = oldData.data.relations
       .filter((relation: any) =>
@@ -131,15 +130,15 @@ function Address(): JSX.Element {
 
       setNewData(newUserData);
     }
-  }, [psCode, houseNumber, addition, currentStepperLocation, city]);
+  }, [psCode, houseNumber, addition, currentStepperLocation, city, data]);
 
   const handleHouseNumber = (e: any) => {
     // Checks if e is a number, and if it is, set it as the house number otherwise sets invalidAddress to true
     if (isNaN(e)) {
-      setHsValid(true);
+      setHsValid(false);
       setHouseNumber(e);
     } else {
-      setHsValid(false);
+      setHsValid(true);
       setHouseNumber(e);
     }
   };
@@ -161,14 +160,17 @@ function Address(): JSX.Element {
   };
 
   useEffect(() => {
+    const validPostalCode = /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/;
+
     if (!isPostBusAddress) {
       setIsButtonDisabled(
         !(psCode && houseNumber && data.street && data.city && !invalidAddress)
       );
     } else {
-      if (validPostalCode.test(psCode) && houseNumber && city && !hsValid) {
+      if (validPostalCode.test(psCode) && houseNumber && city && hsValid) {
         setIsButtonDisabled(false);
       } else {
+        console.log(validPostalCode.test(psCode));
         setIsButtonDisabled(true);
       }
     }
@@ -276,7 +278,14 @@ function Address(): JSX.Element {
 
   return (
     <>
-      <Stepper activeStep={currentStepperLocation}>
+      <Stepper
+        activeStep={currentStepperLocation}
+        sx={{
+          width: { xs: "106%", sm: "102%" },
+          ml: "-0.5rem",
+          overflowX: "clip",
+        }}
+      >
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {

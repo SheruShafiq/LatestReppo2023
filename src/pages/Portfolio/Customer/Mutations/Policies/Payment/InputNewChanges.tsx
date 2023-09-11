@@ -44,20 +44,18 @@ const InputNewChanges: React.FC<InputNewChangesProps> = ({
 }) => {
   return (
     <>
+      <Typography sx={{ pt: "12px", ml: "0px" }}>
+        Kies de nieuwe betaalgegevens voor de geselecteerde polissen
+      </Typography>
       {newData.map((data: any, index: any) => (
         <div key={index}>
-          <Box>
-            <Typography sx={{ pt: "12px", ml: "0px", pl: "8px" }}>
-              Kies de nieuwe betaalgegevens voor de geselecteerde polissen
-            </Typography>
-          </Box>
-          <Stack px={"0.5rem"} mt={"2rem"}>
+          <Stack mt={index === 0 ? "3rem" : "3.5rem"}>
             <InfoHeader
               title={data.policy_details.external_number}
               subtitle={`${data.person_details.first_name} ${data.person_details.last_name}`}
               subtitle2={data.policy_details.product_name}
             />
-            <Stack px={"0.5rem"}>
+            <Stack pl={"0.5rem"}>
               <Box display={"flex"} flexDirection={"row"} py={"1rem"}>
                 <RadioInput
                   title={"Betaalfrequentie"}

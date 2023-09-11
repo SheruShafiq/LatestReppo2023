@@ -1,4 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
+
 import PolicyIcon from "@/assets/Policy.svg";
 
 export type InfoHeaderProps = {

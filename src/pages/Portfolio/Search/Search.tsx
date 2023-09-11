@@ -5,26 +5,47 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material";
+import { PageData, setRecentlyViewed } from "@/lib/redux/slices/layoutSlice";
+import { useEffect, useState } from "react";
+
 import ButtonIcon from "@mui/icons-material/Search";
 import DefaultPageLayout from "@/components/DefaultPageLayout";
+import DefaultSearchResult from "@/components/DefaultSearchResult";
 import GenericDatePicker from "@/components/GenericDatePicker";
 import GenericInputField from "@/components/GenericInputField";
-import SearchResultsList from "@/components/SearchResultsList";
-import { useSearchForm } from "@/lib/hooks/useSearchForm";
-import DefaultSearchResult from "@/components/DefaultSearchResult";
 import NoSearchResult from "@/components/NoSearchResult";
-import useResizeHandler from "@/lib/hooks/useResizeHandler";
-import { useAppSelector } from "@/lib/hooks/useAppSelector";
-import { selectSessionPermissions } from "@/lib/redux/slices/sessionSlice";
+import PageHeadingComponent from "@/components/PageHeadingComponent";
+import SearchResultsList from "@/components/SearchResultsList";
 import Unauthorized from "@/pages/Unauthorized";
+import { id } from "date-fns/locale";
+import { selectSessionPermissions } from "@/lib/redux/slices/sessionSlice";
+import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
+import useResizeHandler from "@/lib/hooks/useResizeHandler";
+import { useSearchForm } from "@/lib/hooks/useSearchForm";
 
 const Search = () => {
   const size = useResizeHandler();
   const permission = useAppSelector(selectSessionPermissions);
 
-  if (!permission.includes("portfolio-management")) {
+  if (!permission.includes("portfolio")) {
     return <Unauthorized />;
   }
+  const dispatch = useAppDispatch();
+  const [currentPageData, setCurrentPageData] = useState<PageData>();
+  useEffect(() => {
+    setCurrentPageData({
+      heading: "Zoeken klant",
+      subHeading: [`Portefeuille`],
+      url: `/portfolio`,
+    });
+  }, [id]);
+
+  useEffect(() => {
+    if (currentPageData) {
+      dispatch(setRecentlyViewed(currentPageData));
+    }
+  }, [currentPageData]);
 
   const {
     voornaam,
@@ -52,19 +73,8 @@ const Search = () => {
 
   return (
     <>
-      <Typography variant="body2" color={"#6C737F"}>
-        Portefeuille
-      </Typography>
-      <Typography
-        variant="h1"
-        color={"#1A202C"}
-        fontWeight={600}
-        fontSize={24}
-        lineHeight={"32px"}
-        marginBottom={"0.5rem"}
-      >
-        Zoeken klant
-      </Typography>
+      <PageHeadingComponent subtitle={"Portefeuille"} title={"Zoeken klant"} />
+
       <Divider
         sx={{
           mb: "2rem",

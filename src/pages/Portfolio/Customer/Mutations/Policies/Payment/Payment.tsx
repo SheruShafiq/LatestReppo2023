@@ -219,7 +219,6 @@ function Payment(): JSX.Element {
     });
     if (setNewData) {
       setNewData(updatedData);
-      console.log(newData);
     }
   };
 
@@ -313,7 +312,14 @@ function Payment(): JSX.Element {
 
   return (
     <>
-      <Stepper activeStep={currentStepperLocation}>
+      <Stepper
+        activeStep={currentStepperLocation}
+        sx={{
+          width: { xs: "105%", sm: "102%" },
+          ml: "-0.5rem",
+          overflowX: "clip",
+        }}
+      >
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {

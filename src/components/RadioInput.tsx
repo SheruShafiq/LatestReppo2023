@@ -1,11 +1,12 @@
 import {
-  Stack,
-  Typography,
   FormControl,
-  RadioGroup,
   FormControlLabel,
   Radio,
+  RadioGroup,
+  Stack,
+  Typography,
 } from "@mui/material";
+
 import React from "react";
 
 export type RadioInputProps = {
@@ -25,7 +26,7 @@ const RadioInput = ({
   options,
 }: RadioInputProps) => {
   return (
-    <Stack id={"Betaalfrequentie"} paddingRight={"13rem"}>
+    <Stack id={"Betaalfrequentie"} flex={1}>
       {title && (
         <Typography fontSize={"14px"} lineHeight={"26px"} color={"#6C737F"}>
           {title}

@@ -1,4 +1,3 @@
-import ChevronRight from "@mui/icons-material/ChevronRight";
 import {
   Avatar,
   Box,
@@ -10,12 +9,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import ChevronRight from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router-dom";
 import { RoutePaths } from "../lib/types/RoutesPaths";
 import { SearchResultType } from "../lib/types/SearchResultType";
 import { motion } from "framer-motion";
 import sleep from "../lib/helper/sleep";
-import { useState, useEffect } from "react";
 
 export type SearchResultsListProps = {
   data: SearchResultType[];

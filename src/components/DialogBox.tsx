@@ -6,6 +6,7 @@ import {
   DialogActions,
   DialogContentText,
   DialogTitle,
+  Drawer,
   SwipeableDrawer,
 } from "@mui/material";
 import useResizeHandler from "@/lib/hooks/useResizeHandler";
@@ -70,22 +71,20 @@ const DialogBox = ({
       </DialogActions>
     </Dialog>
   ) : (
-    <SwipeableDrawer
-      anchor="bottom"
+    <Drawer
       open={open}
-      onClose={() => {}}
-      onOpen={() => console.log("open")}
-      swipeAreaWidth={56}
-      disableSwipeToOpen={false}
+      anchor="bottom"
       sx={{
-        "& .MuiDrawer-paper": {
-          borderTopLeftRadius: 8,
-          borderTopRightRadius: 8,
-          p: "1.5rem",
+        "& .MuiPaper-elevation16": {
+          borderTopRightRadius: "1rem",
+          borderTopLeftRadius: "1rem",
         },
       }}
     >
-      <Box sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+      <Box
+        sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+        padding={"1.5rem"}
+      >
         <DialogTitle
           sx={{
             padding: "0",
@@ -126,7 +125,7 @@ const DialogBox = ({
           </Button>
         </DialogActions>
       </Box>
-    </SwipeableDrawer>
+    </Drawer>
   );
 };
 

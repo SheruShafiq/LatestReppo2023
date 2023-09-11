@@ -6,8 +6,17 @@ import { setReset, setWarningActive } from "@/lib/redux/slices/mutationSlice";
 import { Box, Typography, FormGroup, Fade, Button } from "@mui/material";
 import React from "react";
 
-const SelectRelations: React.FC<any> = ({
-  stepHandler,
+export type SelectRelationsProps = {
+  personDetails: any[];
+  handlePersonSelect: (personId: string) => void;
+  selectedPersons: string[];
+  oldData: any;
+  isButtonDisabled: boolean;
+  handleNext: () => void;
+  handleBack: () => void;
+};
+
+const SelectRelations: React.FC<SelectRelationsProps> = ({
   personDetails,
   handlePersonSelect,
   selectedPersons,
@@ -16,7 +25,6 @@ const SelectRelations: React.FC<any> = ({
   handleNext,
   handleBack,
 }) => {
-  const dispatch = useAppDispatch();
   return (
     <>
       <Box>
@@ -32,7 +40,7 @@ const SelectRelations: React.FC<any> = ({
               onSelect={() => handlePersonSelect(person.id)}
               title={person.name}
               subtitle={person.id}
-              subtitle2={`${oldData.data?.street} ${oldData.data?.housenumber}${oldData.data?.housenumber_addition},  ${oldData.data?.city}`}
+              subtitle2={`${oldData.data?.street} ${oldData.data?.housenumber}${oldData.data?.housenumber_addition} - ${oldData.data?.postal_code} ${oldData.data?.city}`}
             />
           ))}
         </FormGroup>

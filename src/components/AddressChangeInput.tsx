@@ -100,36 +100,39 @@ const AddressChangeInput = ({
       }}
       id="notPostBusAddress"
     >
-      <TextField
-        id="psCode"
-        label="Postcode"
-        variant="outlined"
-        size="small"
-        sx={{
-          maxWidth: { xs: "10.5rem", sm: "12.5rem" },
-          ml: { xs: "-1rem", sm: "0rem" },
-          pb: { xs: "1.5rem", sm: "0rem" },
-          mr: { xs: "0.6rem", sm: "1.5rem" },
-        }}
-        value={psCode}
-        onChange={(e) => setPsCode(e.target.value)}
-        onBlur={handlePSCodeValidation}
-        error={psValid}
-      />
-      <TextField
-        error={hsValid}
-        type="text"
-        id="huisNummer"
-        label="Huisnummer"
-        variant="outlined"
-        size="small"
-        value={hsNr}
-        onChange={(e) => setHsNr(e.target.value)}
-        sx={{
-          maxWidth: { xs: "10.5rem", sm: "12.5rem" },
-          mr: { xs: "0rem", sm: "1.5rem" },
-        }}
-      />
+      <Box display={"flex"} flexDirection={"row"}>
+        <TextField
+          id="psCode"
+          label="Postcode"
+          variant="outlined"
+          size="small"
+          sx={{
+            width: { xs: "100%", sm: "12.5rem" },
+
+            pb: { xs: "1.5rem", sm: "0rem" },
+            mr: "1.5rem",
+            alignSelf: { xs: "flex-start", sm: "auto" },
+          }}
+          value={psCode}
+          onChange={(e) => setPsCode(e.target.value)}
+          onBlur={handlePSCodeValidation}
+          error={psValid}
+        />
+        <TextField
+          error={hsValid}
+          type="text"
+          id="huisNummer"
+          label="Huisnummer"
+          variant="outlined"
+          size="small"
+          value={hsNr}
+          onChange={(e) => setHsNr(e.target.value)}
+          sx={{
+            width: { xs: "100%", sm: "12.5rem" },
+            mr: { xs: "0rem", sm: "1.5rem" },
+          }}
+        />
+      </Box>
       <TextField
         id="outlined-select-currency"
         select
@@ -138,8 +141,7 @@ const AddressChangeInput = ({
         placeholder="addition."
         size="small"
         sx={{
-          width: { xs: "24rem", sm: "11rem" },
-          mr: { xs: "1rem", sm: "0rem" },
+          width: { xs: "100%", sm: "11rem" },
         }}
         onChange={(e) => setAddition(e.target.value)}
         data-testid="addition"
@@ -158,8 +160,8 @@ const AddressChangeInput = ({
         size="small"
         value={data.street}
         sx={{
-          width: { xs: "24rem", sm: "12.5rem" },
-          mr: { xs: "1rem", sm: "1.5rem" },
+          width: { xs: "100%", sm: "12.5rem" },
+          mr: { xs: "0rem", sm: "1.5rem" },
           mt: { xs: "1.5rem", sm: "1.2rem" },
           "& label.Mui-focused": {
             color: "#94A3B8",
@@ -181,9 +183,7 @@ const AddressChangeInput = ({
         focused
         value={data.city}
         sx={{
-          width: { xs: "24rem", sm: "12.5rem" },
-          mr: { xs: "1rem", sm: "0rem" },
-          ml: { xs: "0rem", sm: "0rem" },
+          width: { xs: "100%", sm: "12.5rem" },
           mt: { xs: "1.5rem", sm: "1.2rem" },
           "& label.Mui-focused": {
             color: "#94A3B8",

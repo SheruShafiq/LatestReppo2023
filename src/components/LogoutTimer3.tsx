@@ -6,18 +6,20 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import { useAppSelector } from "../lib/hooks/useAppSelector";
-import { useAppDispatch } from "../lib/hooks/useAppDispatch";
 import {
   logout,
+  selectSessionCsrf,
   selectSessionExpiresAt,
   setSessionExpiresAt,
 } from "../lib/redux/slices/sessionSlice";
-import { d } from "vitest/dist/types-e3c9754d";
+import { useEffect, useState } from "react";
+
+import { parse } from "date-fns";
+import { useAppDispatch } from "../lib/hooks/useAppDispatch";
+import { useAppSelector } from "../lib/hooks/useAppSelector";
 
 const LogoutTimer = () => {
-  const timeoutVisible = 300; // 5 minutes in milliseconds
+  const timeoutVisible = 300000; // 5 minutes in milliseconds
   const dispatch = useAppDispatch();
   const [state, setState] = useState(false);
   const [time, setTime] = useState("00:00");
@@ -32,10 +34,8 @@ const LogoutTimer = () => {
       const expiryTime = parseInt(expiryStore || "0") * 1000;
       const currentTime = new Date().getTime();
       const remainingTime = expiryTime - currentTime;
-
       if (remainingTime <= 0) {
-        // Session has expired
-        // dispatch(logout());
+        dispatch(logout());
         setState(false);
         setTime("00:00");
       } else if (remainingTime < timeoutVisible) {
@@ -43,6 +43,7 @@ const LogoutTimer = () => {
         const remainingSeconds = Math.floor(remainingTime / 1000);
         const remainingProgress = (remainingTime / timeoutVisible) * 100;
         setSeconds(remainingSeconds);
+
         setProgress(remainingProgress);
         setTime(formatTime(remainingSeconds));
       } else {
@@ -56,7 +57,9 @@ const LogoutTimer = () => {
   const formatTime = (time: number) => {
     const minutes = Math.max(0, Math.floor(time / 60));
     const seconds = Math.max(0, time % 60);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   async function extendSession() {
@@ -64,11 +67,21 @@ const LogoutTimer = () => {
     const newExpiry = await res.json();
     dispatch(setSessionExpiresAt(newExpiry.expires_at));
   }
-
-  function handleLogout() {
-    dispatch(logout());
-    window.location.href = "/login";
-  }
+  const csrfToken = useAppSelector(selectSessionCsrf);
+  const handleLogout = async () => {
+    const response = await fetch("/api/sessions/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      body: JSON.stringify({}),
+    });
+    if (response.ok) {
+      dispatch(logout());
+      // window.location.href = RoutePaths.Login;
+    }
+  };
 
   return (
     <Modal
@@ -92,7 +105,6 @@ const LogoutTimer = () => {
         }}
         spacing={1}
         data-testid="logout-timer"
-
       >
         <Typography
           id="modal-modal-title"
@@ -103,7 +115,7 @@ const LogoutTimer = () => {
         >
           Sessie {seconds > 0 && "bijna "}verlopen
         </Typography>
-        
+
         <Typography
           id="modal-modal-description"
           variant="body1"
@@ -209,8 +221,3 @@ const LogoutTimer = () => {
 };
 
 export default LogoutTimer;
-
-
-
-// 1627585800
-// 1627584000000

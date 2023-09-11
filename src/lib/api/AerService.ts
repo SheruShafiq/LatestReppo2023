@@ -105,13 +105,66 @@ class AerService {
     async postMutationAddress(data: IPostMutationAddress ){
         try {
             const response = await this.httpClient.post('/api/mutations/address', data)
-            console.log(response)
             return response
         } catch (error) {
             console.error(error)
             throw error
         }
     }
+
+    async getDocument (id: string){
+        try {
+            const response = await fetch(`/api/documents/${id}`);
+            const contentType = response.headers.get("content-type");
+            if (contentType?.startsWith("application/pdf")) {
+              const blob = await response.blob();
+              // Introduce a 1-second delay before setting the data
+             const file = URL.createObjectURL(blob)
+                return file
+            } 
+          } catch (error) {
+          }
+        }
+       
+        async postDocumentData(data: any){
+            try {
+                const response = await this.httpClient.post('/api/documents', data);
+                return response;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        }
+
+        async postNewsData(data: any){
+            try {
+                const response = await this.httpClient.post('/api/news', data);
+                return response;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        }
+
+        async postNewAnouncment(data: any){
+            try {
+                const response = await this.httpClient.post('/api/announcements', data);
+                return response;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        }
+        async deleteAnouncment(data: any){
+            try {
+                const response = await this.httpClient.delete('/api/announcements', data);
+                return response;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        }
 }
 
 export default AerService
+

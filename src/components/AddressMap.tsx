@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
-import GenericFallback from "./GenericFallback";
+
 import { Box, Skeleton } from "@mui/material";
-import { useAppSelector } from "@/lib/hooks/useAppSelector";
-import {
-  selectSessionCsrf,
-  setSessionExpiresAt,
-} from "@/lib/redux/slices/sessionSlice";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import React, { useEffect, useState } from "react";
+
+import GenericFallback from "./GenericFallback";
+import { LatLngExpression } from "leaflet";
 import { useAppDispatch } from "@/lib/hooks/useAppDispatch";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
 
 export type AddressMapProps = {
   postalCode: string;
@@ -43,7 +41,6 @@ const AddressMap = ({ postalCode, houseNumber }: AddressMapProps) => {
 
         const results = await response.json();
         // TODO: Fix this cause it's causing errors in tests
-        // dispatch(setSessionExpiresAt(response.headers.get("x-session-expires")));
 
         if (results.latitude && results.longitude) {
           setPosition([

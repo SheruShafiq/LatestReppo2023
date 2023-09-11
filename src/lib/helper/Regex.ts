@@ -1,4 +1,4 @@
-export const validPostalCode = new RegExp("/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/");
+export const validPostalCode = new RegExp('/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/');
 
 export const validPhoneNumber = new RegExp("^[0-9]{10}$");
 
